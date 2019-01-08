@@ -1,5 +1,17 @@
 # TODO alpine
 FROM ubuntu:bionic
+ARG DEBIAN_FRONTEND=noninteractive
+# locale and timezone
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+    locales \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && locale-gen en_US.UTF-8
+ENV LANG=en_US.UTF-8 \
+    LANGUAGE=en_US:en \
+    LC_ALL=en_US.UTF-8 \
+    TZ=Asia/Tokyo
 # TODO change font
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -18,12 +30,6 @@ RUN apt-get update \
     xvfb \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-# locale and timezone
-RUN locale-gen en_US.UTF-8
-ENV LANG=en_US.UTF-8 \
-    LANGUAGE=en_US:en \
-    LC_ALL=en_US.UTF-8 \
-    TZ=Asia/Tokyo
 # noVNC
 RUN mkdir -p /opt/noVNC/utils/websockify \
     && wget -nv -O - "https://github.com/novnc/noVNC/archive/v1.0.0.tar.gz" \
