@@ -12,8 +12,8 @@ Access http://localhost:8080 via web browser.
 
 ## TODO
 
-* use alpine
 * add docker-compose.yml
 * change port, screen resolution and more variable as env
-* screenshot and document
+* mount home directory and some setting files
+* use alpine
 
