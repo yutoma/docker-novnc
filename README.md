@@ -12,7 +12,6 @@ Access http://localhost:8080 via web browser.
 
 ## TODO
 
-* change port, screen resolution and more variable as env
 * mount home directory and some setting files
 * use alpine
 

@@ -1,7 +1,5 @@
 # TODO alpine
 FROM ubuntu:bionic
-# TODO change
-EXPOSE 8080
 # TODO change font
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -34,6 +32,8 @@ RUN mkdir -p /opt/noVNC/utils/websockify \
     | tar zx --strip-components=1 -C /opt/noVNC/utils/websockify \
     && ln -s /opt/noVNC/vnc.html /opt/noVNC/index.html
 # start daemons
-ENV DISPLAY=:0
+ENV DISPLAY=:0 \
+    RESOLUTION=1200x900x24
+EXPOSE 6080
 COPY novnc.conf /etc/supervisor/conf.d/novnc.conf
 CMD ["/usr/bin/supervisord"]

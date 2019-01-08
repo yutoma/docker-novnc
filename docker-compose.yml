@@ -7,6 +7,10 @@ services:
         # for apt-cacher
         http_proxy: http://172.17.0.1:3142
         https_proxy: ""
+    container_name: novnc
+    hostname: novnc
     ports:
-      - 8080:8080
+    - 6080:6080
+    environment:
+      RESOLUTION: 1200x900x24
 
