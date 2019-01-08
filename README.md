@@ -1,7 +1,21 @@
-# x11-novnc
-A dockerfile to run X11 through the browser with noVNC
+# docker-novnc
 
-Inspired by
-* https://github.com/codenvy/dockerfiles/tree/master/x11_vnc 
-* https://github.com/toastie89/x11-novnc
-* https://github.com/tukiyo/x11-novnc
+Docker image for GUI environment with noVNC
+
+## Get Started
+
+```bash
+$ docker run -d --rm -p 8080:8080 yutoma/novnc
+```
+
+Access http://localhost:8080 by web browser.
+
+## TODO
+
+* use openbox
+* remove browser
+* use alpine
+* add docker-compose.yml
+* change port, screen resolution and more variable as env
+* screenshot and document
+
