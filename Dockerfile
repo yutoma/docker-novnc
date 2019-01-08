@@ -1,23 +1,18 @@
 # TODO alpine
-FROM ubuntu
-
+FROM ubuntu:bionic
 # TODO change
 EXPOSE 8080
-
-# Set correct environment variables.
-ENV HOME=/root \
-    DEBIAN_FRONTEND=noninteractive \
-    LANG=en_US.UTF-8 \
-    LC_ALL=en_US.UTF-8 \
-    LANGUAGE=en_US.UTF-8 \
-    TZ=Asia/Tokyo
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
-    && echo $TZ > /etc/timezone
-
+# TODO change font
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     ca-certificates \
+    fonts-takao-gothic \
+    locales \
+    lxterminal \
+    mozc-server \
     net-tools \
+    obconf \
+    openbox \
     python \
     supervisor \
     wget \
@@ -25,25 +20,20 @@ RUN apt-get update \
     xvfb \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-
-# Download and install noVNC.
+# locale and timezone
+RUN locale-gen en_US.UTF-8
+ENV LANG=en_US.UTF-8 \
+    LANGUAGE=en_US:en \
+    LC_ALL=en_US.UTF-8 \
+    TZ=Asia/Tokyo
+# noVNC
 RUN mkdir -p /opt/noVNC/utils/websockify \
-    && wget -qO- "http://github.com/kanaka/noVNC/tarball/master" \
-    | tar -zx --strip-components=1 -C /opt/noVNC \
-    && wget -qO- "https://github.com/kanaka/websockify/tarball/master" \
-    | tar -zx --strip-components=1 -C /opt/noVNC/utils/websockify \
+    && wget -nv -O - "https://github.com/novnc/noVNC/archive/v1.0.0.tar.gz" \
+    | tar zx --strip-components=1 -C /opt/noVNC \
+    && wget -nv -O - "https://github.com/novnc/websockify/archive/v0.8.0.tar.gz" \
+    | tar zx --strip-components=1 -C /opt/noVNC/utils/websockify \
     && ln -s /opt/noVNC/vnc.html /opt/noVNC/index.html
-
-# Install some additins.
-# TODO use openbox, remove chromium, change font
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-    fluxbox \
-    chromium-browser \
-    fonts-takao-gothic \
-    mozc-server \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
+# start daemons
+ENV DISPLAY=:0
 COPY novnc.conf /etc/supervisor/conf.d/novnc.conf
 CMD ["/usr/bin/supervisord"]

@@ -1,6 +1,6 @@
 # docker-novnc
 
-Docker image for GUI environment with noVNC
+Docker image for GUI environment by noVNC
 
 ## Get Started
 
@@ -8,12 +8,10 @@ Docker image for GUI environment with noVNC
 $ docker run -d --rm -p 8080:8080 yutoma/novnc
 ```
 
-Access http://localhost:8080 by web browser.
+Access http://localhost:8080 via web browser.
 
 ## TODO
 
-* use openbox
-* remove browser
 * use alpine
 * add docker-compose.yml
 * change port, screen resolution and more variable as env
